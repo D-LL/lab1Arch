@@ -15,7 +15,6 @@ public class SysInits : ISystem
         {
             World.world.Add("Collidable", new Collidable());
             World.world.Add("ColorComp", new ColorComp());
-            World.world.Add("Dynamic", new Dynamic());
             World.world.Add("Frames", new Frames());
             World.world.Add("Position", new Position());
             World.world.Add("Size", new Size());
@@ -37,21 +36,19 @@ public class SysInits : ISystem
                 ((ColorComp)World.world["ColorComp"]).color.Add(UnityEngine.Color.red);
                 if ((entity.id - 1) % 4 != 0)
                 {
-                    ((Dynamic)World.world["Dynamic"]).entities.Add(entity);
+                    //dynamic circle
+                    ((Speed)World.world["Speed"]).entities.Add(entity);
+                    ((Speed)World.world["Speed"]).speed.Add(e.initialSpeed);
                 }
                 ((Position)World.world["Position"]).entities.Add(entity);
                 ((Position)World.world["Position"]).position.Add(e.initialPos);
                 ((Size)World.world["Size"]).entities.Add(entity);
                 ((Size)World.world["Size"]).size.Add(e.size);
-                ((Speed)World.world["Speed"]).entities.Add(entity);
-                ((Speed)World.world["Speed"]).speed.Add(e.initialSpeed);
                 if (e.initialPos.x < 0)
                 {
                     ((LeftSide)World.world["LeftSide"]).entities.Add(entity);
                 }
                 ECSManager.Instance.CreateShape(entityIndex, e);
-                ECSManager.Instance.UpdateShapePosition(entityIndex, e.initialPos);
-                ECSManager.Instance.UpdateShapeSize(entityIndex, e.size);
                 entityIndex += 1;
             }
         }
