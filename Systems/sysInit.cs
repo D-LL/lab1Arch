@@ -5,6 +5,10 @@ using UnityEngine;
 public class SysInits : ISystem
 {
     public string Name { get; }
+    public SysInits()
+    {
+        Name = "SysInits";
+    }
     public void UpdateSystem()
     {
         if (World.world.Count == 0)
@@ -19,6 +23,11 @@ public class SysInits : ISystem
             World.world.Add("LeftSide", new LeftSide());
 
             uint entityIndex = 0;
+            //entity zero is frame manager
+            EntityComponent ex = new EntityComponent();
+            ex.id = entityIndex;
+            ((Frames)World.world["Frames"]).entities.Add(ex);
+            entityIndex += 1;
             foreach(Config.ShapeConfig e in ECSManager.Instance.Config.allShapesToSpawn)
             {
                 EntityComponent entity = new EntityComponent();
@@ -26,15 +35,24 @@ public class SysInits : ISystem
                 ((Collidable)World.world["Collidable"]).entities.Add(entity);
                 ((ColorComp)World.world["ColorComp"]).entities.Add(entity);
                 ((ColorComp)World.world["ColorComp"]).color.Add(UnityEngine.Color.red);
-                ((Dynamic)World.world["Dynamic"]).entities.Add(entity);
-                ((Frames)World.world["Frames"]).entities.Add(entity);
+                if ((entity.id - 1) % 4 != 0)
+                {
+                    ((Dynamic)World.world["Dynamic"]).entities.Add(entity);
+                }
                 ((Position)World.world["Position"]).entities.Add(entity);
                 ((Position)World.world["Position"]).position.Add(e.initialPos);
                 ((Size)World.world["Size"]).entities.Add(entity);
                 ((Size)World.world["Size"]).size.Add(e.size);
                 ((Speed)World.world["Speed"]).entities.Add(entity);
                 ((Speed)World.world["Speed"]).speed.Add(e.initialSpeed);
-                ((LeftSide)World.world["LeftSide"]).entities.Add(entity);
+                if (e.initialPos.x < 0)
+                {
+                    ((LeftSide)World.world["LeftSide"]).entities.Add(entity);
+                }
+                ECSManager.Instance.CreateShape(entityIndex, e);
+                ECSManager.Instance.UpdateShapePosition(entityIndex, e.initialPos);
+                ECSManager.Instance.UpdateShapeSize(entityIndex, e.size);
+                entityIndex += 1;
             }
         }
     }

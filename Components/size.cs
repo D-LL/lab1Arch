@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Size : IComponent
 {
-    public List<EntityComponent> entities;
-    public List<float> size;
+    public List<EntityComponent> entities = new List<EntityComponent>();
+    public List<float> size = new List<float>();
 }

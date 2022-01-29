@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Dynamic : IComponent
 {
-    public List<EntityComponent> entities;
+    public List<EntityComponent> entities = new List<EntityComponent>();
 }

@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class LeftSide : IComponent
 {
-    public List<EntityComponent> entities;
+    public List<EntityComponent> entities = new List<EntityComponent>();
 }
 
