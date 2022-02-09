@@ -11,8 +11,9 @@ public class sysDraw : ISystem
     }
     public void UpdateSystem()
     {
-        //position
-        List<EntityComponent> entities = ((Position)World.world["Position"]).entities;
+        //position and drawable
+        List<EntityComponent>[] req = { (((Position)World.world["Position"]).entities), (((Drawable)World.world["Drawable"]).entities) };
+        List<EntityComponent> entities = World.getIntersect(req);
 
         foreach (EntityComponent e in entities)
         {
@@ -20,7 +21,8 @@ public class sysDraw : ISystem
             ECSManager.Instance.UpdateShapePosition(e.id, (((Position)World.world["Position"]).position)[idxPos]);
         }
         //size
-        entities = ((Size)World.world["Size"]).entities;
+        List<EntityComponent>[] req2 = { (((Size)World.world["Size"]).entities), (((Drawable)World.world["Drawable"]).entities) };
+        entities = World.getIntersect(req2);
 
         foreach (EntityComponent e in entities)
         {
@@ -28,7 +30,8 @@ public class sysDraw : ISystem
             ECSManager.Instance.UpdateShapeSize(e.id, (((Size)World.world["Size"]).size)[idxSize]);
         }
         //color
-        entities = ((ColorComp)World.world["ColorComp"]).entities;
+        List<EntityComponent>[] req3 = { (((ColorComp)World.world["ColorComp"]).entities), (((Drawable)World.world["Drawable"]).entities) };
+        entities = World.getIntersect(req3);
 
         foreach (EntityComponent e in entities)
         {

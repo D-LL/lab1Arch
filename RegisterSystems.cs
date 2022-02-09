@@ -10,6 +10,7 @@ public class RegisterSystems
         // AJOUTEZ VOS SYSTEMS ICI
         toRegister.Add(new SysInits());
         toRegister.Add(new sysPosition());
+        toRegister.Add(new sysCollision());
         toRegister.Add(new sysDraw());
         return toRegister;
     }

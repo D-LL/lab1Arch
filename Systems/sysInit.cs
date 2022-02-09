@@ -17,6 +17,7 @@ public class SysInits : ISystem
             World.world.Add("ColorComp", new ColorComp());
             World.world.Add("Frames", new Frames());
             World.world.Add("Position", new Position());
+            World.world.Add("Drawable", new Drawable());
             World.world.Add("Size", new Size());
             World.world.Add("Speed", new Speed());
             World.world.Add("LeftSide", new LeftSide());
@@ -44,6 +45,8 @@ public class SysInits : ISystem
                 ((Position)World.world["Position"]).position.Add(e.initialPos);
                 ((Size)World.world["Size"]).entities.Add(entity);
                 ((Size)World.world["Size"]).size.Add(e.size);
+                ((Size)World.world["Size"]).originalSize.Add(e.size);
+                ((Drawable)World.world["Drawable"]).entities.Add(entity);
                 if (e.initialPos.x < 0)
                 {
                     ((LeftSide)World.world["LeftSide"]).entities.Add(entity);

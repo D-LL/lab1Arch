@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Past : IComponent
+public class Drawable : IComponent
 {
     public List<EntityComponent> entities = new List<EntityComponent>();
 }
