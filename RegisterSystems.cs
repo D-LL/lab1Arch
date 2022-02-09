@@ -11,6 +11,7 @@ public class RegisterSystems
         toRegister.Add(new SysInits());
         toRegister.Add(new sysPosition());
         toRegister.Add(new sysCollision());
+        toRegister.Add(new sysColor());
         toRegister.Add(new sysDraw());
         return toRegister;
     }

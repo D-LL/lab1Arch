@@ -2,6 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct Collision
+{
+    public EntityComponent primary;
+    public EntityComponent secondary;
+    public Collision(EntityComponent x, EntityComponent y)
+    {
+        primary = x;
+        secondary = y;
+    }
+}
+
 public class sysCollision : ISystem
 {
     public string Name { get; }
@@ -12,7 +23,7 @@ public class sysCollision : ISystem
     public void UpdateSystem()
     {
         Vector3 stageDimensions = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height,0));
-        //handle collision within circles
+        //find collision within circles
         {
             //get entities with a position and collidable(all circles)
             List<EntityComponent>[] req = { (((Position)World.world["Position"]).entities), (((Collidable)World.world["Collidable"]).entities) };
@@ -21,11 +32,11 @@ public class sysCollision : ISystem
             List<EntityComponent>[] req2 = { entities, (((Speed)World.world["Speed"]).entities) };
             List<EntityComponent> dynEntities = World.getIntersect(req2);
             //detect collisions between dynamic and all
+            List<Collision> collisions = new List<Collision>();
             foreach (EntityComponent e in dynEntities)
             {
                 int idxPos = (((Position)World.world["Position"]).entities).IndexOf(e);
                 int idxSize = (((Size)World.world["Size"]).entities).IndexOf(e);
-                int idxSpeed = (((Speed)World.world["Speed"]).entities).IndexOf(e);
                 Vector2 pos = (((Position)World.world["Position"]).position)[idxPos];
                 float size = (((Size)World.world["Size"]).size)[idxSize];
                 foreach(EntityComponent f in entities)
@@ -37,23 +48,41 @@ public class sysCollision : ISystem
                     //detect collision
                     if (e.id != f.id && (pos-posf).magnitude < (size + sizef)/2)
                     {
-                        //change size
-                        float oldSize = size;
-                        (((Size)World.world["Size"]).size)[idxSize] *= 2;
-                        size *= 2;
-                        //if size max remove collidable (entities list already copied so equivalent to using a command buffer)
-                        if (size >= ECSManager.Instance.Config.maxSize)
-                        {
-                            (((Size)World.world["Size"]).size)[idxSize] = ECSManager.Instance.Config.maxSize;
-                            (((Collidable)World.world["Collidable"]).entities).Remove(e);
-                        }
-                        //change speed
-                        (((Speed)World.world["Speed"]).speed)[idxSpeed] *= -1;
-                        //teleport
-                        (((Position)World.world["Position"]).position)[idxPos] += (oldSize/2)*(pos-posf)/(pos-posf).magnitude;
+                        collisions.Add(new Collision(e, f));
                     }
                 }
             }
+            //handle collisions within circles
+            foreach (Collision c in collisions)
+            {
+                int idxPos = (((Position)World.world["Position"]).entities).IndexOf(c.primary);
+                int idxSize = (((Size)World.world["Size"]).entities).IndexOf(c.primary);
+                int idxSpeed = (((Speed)World.world["Speed"]).entities).IndexOf(c.primary);
+                Vector2 pos = (((Position)World.world["Position"]).position)[idxPos];
+                float size = (((Size)World.world["Size"]).size)[idxSize];
+
+                int idxPosf = (((Position)World.world["Position"]).entities).IndexOf(c.secondary);
+                int idxSizef = (((Size)World.world["Size"]).entities).IndexOf(c.secondary);
+                Vector2 posf = (((Position)World.world["Position"]).position)[idxPosf];
+                float sizef = (((Size)World.world["Size"]).size)[idxSizef];
+
+                //change size
+                float oldSize = size;
+                (((Size)World.world["Size"]).size)[idxSize] *= 2;
+                size *= 2;
+                //if size max remove collidable (entities list already copied so equivalent to using a command buffer)
+                if (size >= ECSManager.Instance.Config.maxSize)
+                {
+                    (((Size)World.world["Size"]).size)[idxSize] = ECSManager.Instance.Config.maxSize;
+                    size = ECSManager.Instance.Config.maxSize;
+                    (((Collidable)World.world["Collidable"]).entities).Remove(c.primary);
+                }
+                //change speed
+                (((Speed)World.world["Speed"]).speed)[idxSpeed] *= -1;
+                //teleport
+                (((Position)World.world["Position"]).position)[idxPos] += (size - oldSize)*(pos-posf)/(pos-posf).magnitude;
+            }
+
         }
         //handle collision with border
         {
