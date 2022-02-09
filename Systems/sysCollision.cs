@@ -43,12 +43,14 @@ public class sysCollision : ISystem
                         //if size max remove collidable (entities list already copied so equivalent to using a command buffer)
                         if (size >= ECSManager.Instance.Config.maxSize)
                         {
+                            (((Size)World.world["Size"]).size)[idxSize] = ECSManager.Instance.Config.maxSize;
+                            size = ECSManager.Instance.Config.maxSize;
                             (((Collidable)World.world["Collidable"]).entities).Remove(e);
                         }
                         //change speed
                         (((Speed)World.world["Speed"]).speed)[idxSpeed] *= -1;
                         //teleport
-                        (((Position)World.world["Position"]).position)[idxPos] += (size/2)*(pos-posf)/(pos-posf).magnitude;
+                        (((Position)World.world["Position"]).position)[idxPos] += (size/4)*(pos-posf)/(pos-posf).magnitude;
                     }
                 }
             }
