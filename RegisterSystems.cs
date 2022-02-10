@@ -13,6 +13,7 @@ public class RegisterSystems
         toRegister.Add(new sysCollision());
         toRegister.Add(new sysColor());
         toRegister.Add(new sysDraw());
+        toRegister.Add(new sysRewind());
         return toRegister;
     }
 }

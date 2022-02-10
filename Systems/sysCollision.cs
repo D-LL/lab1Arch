@@ -46,7 +46,7 @@ public class sysCollision : ISystem
                     Vector2 posf = (((Position)World.world["Position"]).position)[idxPosf];
                     float sizef = (((Size)World.world["Size"]).size)[idxSizef];
                     //detect collision
-                    if (e.id != f.id && (pos-posf).magnitude < (size + sizef)/2)
+                    if (e.id != f.id && (pos-posf).magnitude < (size + sizef)/2 && AreInTheSameRun(e,f))
                     {
                         collisions.Add(new Collision(e, f));
                     }
@@ -129,5 +129,12 @@ public class sysCollision : ISystem
                 }
             }
         }
+    }
+    
+    //Making sure that rewind copies do not collide with the original circles
+    private bool AreInTheSameRun(EntityComponent e, EntityComponent f)
+    {
+        if ((((Rewind) World.world["Rewind"]).entities).Contains(e) == (((Rewind) World.world["Rewind"]).entities).Contains(f)) return true;
+        return false;
     }
 }
