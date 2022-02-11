@@ -71,10 +71,8 @@ public class sysCollision : ISystem
                 (((Size)World.world["Size"]).size)[idxSize] *= 2;
                 size *= 2;
                 //if size max remove collidable (entities list already copied so equivalent to using a command buffer)
-                if (size >= ECSManager.Instance.Config.maxSize)
+                if (size > ECSManager.Instance.Config.maxSize)
                 {
-                    (((Size)World.world["Size"]).size)[idxSize] = ECSManager.Instance.Config.maxSize;
-                    size = ECSManager.Instance.Config.maxSize;
                     (((Collidable)World.world["Collidable"]).entities).Remove(c.primary);
                 }
                 //change speed
