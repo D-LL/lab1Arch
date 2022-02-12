@@ -12,14 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f6298b63162af49b161af8f69d4513, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
-  maxSize: 8
+  maxSize: 3
   allShapesToSpawn:
   - initialPos: {x: -5, y: 0}
-    size: 3
+    size: 1.5
     initialSpeed: {x: 1, y: 3}
   - initialPos: {x: 2, y: 2}
-    size: 2
+    size: 1
     initialSpeed: {x: 3, y: 1}
+  - initialPos: {x: 2, y: -2}
+    size: 0.5
+    initialSpeed: {x: -3, y: 1}
+  - initialPos: {x: -2, y: -2}
+    size: 2
+    initialSpeed: {x: -3, y: -1}
+  - initialPos: {x: -2, y: 2}
+    size: 1
+    initialSpeed: {x: 3, y: -1}
+  - initialPos: {x: 0, y: 0}
+    size: 0.75
+    initialSpeed: {x: 1, y: -3}
+  - initialPos: {x: -5, y: -3}
+    size: 1.3
+    initialSpeed: {x: -1, y: -3}
   _systemsEnabled:
     keys:
     - SysInits
@@ -27,5 +42,4 @@ MonoBehaviour:
     - sysCollision
     - sysDraw
     - sysColor
-    - sysRewind
-    values: 010101010101
+    values: 0101010101
