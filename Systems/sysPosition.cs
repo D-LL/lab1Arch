@@ -14,6 +14,11 @@ public class sysPosition : ISystem
         //find entities with position and speed
         List<EntityComponent>[] req = { (((Position)World.world["Position"]).entities), (((Speed)World.world["Speed"]).entities) };
         List<EntityComponent> entities = World.getIntersect(req);
+        if (((LeftSide) World.world["LeftSide"]).frame % 4 != 0)
+        {
+            List<EntityComponent>[] reqL = { entities, ((LeftSide) World.world["LeftSide"]).entities };
+            entities = World.getIntersect(reqL);
+        }
         
         foreach (EntityComponent e in entities)
         {
@@ -22,8 +27,16 @@ public class sysPosition : ISystem
                 int idxPos = (((Position)World.world["Position"]).entities).IndexOf(e);
                 int idxSpeed = (((Speed)World.world["Speed"]).entities).IndexOf(e);
 
-                (((Position)World.world["Position"]).position)[idxPos] = (((Position)World.world["Position"]).position)[idxPos] + 
-                                                                         Time.deltaTime * (((Speed)World.world["Speed"]).speed)[idxSpeed];
+                if ((((LeftSide) World.world["LeftSide"]).entities).Contains(e))
+                {
+                    (((Position)World.world["Position"]).position)[idxPos] = (((Position)World.world["Position"]).position)[idxPos] + 
+                                                                            Time.deltaTime * (((Speed)World.world["Speed"]).speed)[idxSpeed];
+                }
+                else
+                {
+                    (((Position)World.world["Position"]).position)[idxPos] = (((Position)World.world["Position"]).position)[idxPos] + 
+                                                        ((LeftSide) World.world["LeftSide"]).deltaTimeRight * (((Speed)World.world["Speed"]).speed)[idxSpeed];
+                }
             }
         }
     }

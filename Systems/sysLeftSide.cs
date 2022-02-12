@@ -2,17 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class sysLeftSide : MonoBehaviour
+public class sysLeftSide : ISystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public string Name { get; }
+    public sysLeftSide()
     {
-        
+        Name = "sysLeftSide";
     }
-
-    // Update is called once per frame
-    void Update()
+    public void UpdateSystem()
     {
-        
+        List<EntityComponent> entities = ((Position)World.world["Position"]).entities;
+        foreach (EntityComponent e in entities)
+        {
+            int idxPos = (((Position)World.world["Position"]).entities).IndexOf(e);
+            if ((((Position)World.world["Position"]).position)[idxPos][0] <= 0)
+            {
+                if (!((((LeftSide) World.world["LeftSide"]).entities).Contains(e)))
+                {
+                    (((LeftSide) World.world["LeftSide"]).entities).Add(e);
+                }
+            }
+            else
+            {
+                if ((((LeftSide) World.world["LeftSide"]).entities).Contains(e))
+                {
+                    (((LeftSide) World.world["LeftSide"]).entities).Remove(e);
+                }
+            }
+        }
+        if (((LeftSide) World.world["LeftSide"]).frame % 4 == 0)
+        {
+            ((LeftSide) World.world["LeftSide"]).deltaTimeRight = 0;
+        }
+        ((LeftSide) World.world["LeftSide"]).frame +=1;
+        ((LeftSide) World.world["LeftSide"]).deltaTimeRight += Time.deltaTime;
     }
 }

@@ -14,6 +14,11 @@ public class sysDraw : ISystem
         //position and drawable
         List<EntityComponent>[] req = { (((Position)World.world["Position"]).entities), (((Drawable)World.world["Drawable"]).entities) };
         List<EntityComponent> entities = World.getIntersect(req);
+        if (((LeftSide) World.world["LeftSide"]).frame % 4 != 0)
+        {
+            List<EntityComponent>[] reqL = { entities, ((LeftSide) World.world["LeftSide"]).entities };
+            entities = World.getIntersect(reqL);
+        }
 
         foreach (EntityComponent e in entities)
         {

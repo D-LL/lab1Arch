@@ -28,6 +28,11 @@ public class sysCollision : ISystem
             //get entities with a position and collidable(all circles)
             List<EntityComponent>[] req = { (((Position)World.world["Position"]).entities), (((Collidable)World.world["Collidable"]).entities) };
             List<EntityComponent> entities = World.getIntersect(req);
+            if (((LeftSide) World.world["LeftSide"]).frame % 4 != 0)
+            {
+                List<EntityComponent>[] reqL = { entities, ((LeftSide) World.world["LeftSide"]).entities };
+                entities = World.getIntersect(reqL);
+            }
             //get entities with also speed (dynamic circle)
             List<EntityComponent>[] req2 = { entities, (((Speed)World.world["Speed"]).entities) };
             List<EntityComponent> dynEntities = World.getIntersect(req2);
@@ -90,6 +95,11 @@ public class sysCollision : ISystem
                  (((Speed)World.world["Speed"]).entities),
                  (((Size)World.world["Size"]).entities) };
             List<EntityComponent> entities = World.getIntersect(req);
+            if (((LeftSide) World.world["LeftSide"]).frame % 4 != 0)
+            {
+                List<EntityComponent>[] reqL = { entities, ((LeftSide) World.world["LeftSide"]).entities };
+                entities = World.getIntersect(reqL);
+            }
             foreach (EntityComponent e in entities)
             {
                 int idxPos = (((Position)World.world["Position"]).entities).IndexOf(e);

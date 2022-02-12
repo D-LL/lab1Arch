@@ -54,7 +54,7 @@ public class SysInits : ISystem
                 ECSManager.Instance.CreateShape(entityIndex, e);
                 entityIndex += 1;
             }
-
+            ((LeftSide)World.world["LeftSide"]).frame=0;
             //Create copy for rewind feature
             initRewindCopies(entityIndex);
         }

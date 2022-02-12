@@ -14,6 +14,11 @@ public class sysColor : ISystem
         //find entities with position and speed
         List<EntityComponent>[] req = { (((Position)World.world["Position"]).entities), (((ColorComp)World.world["ColorComp"]).entities) };
         List<EntityComponent> entities = World.getIntersect(req);
+        if (((LeftSide) World.world["LeftSide"]).frame % 4 != 0)
+        {
+            List<EntityComponent>[] reqL = { entities, ((LeftSide) World.world["LeftSide"]).entities };
+            entities = World.getIntersect(reqL);
+        }
 
         //red by default, overwrite in other cases
         foreach (EntityComponent e in entities)
