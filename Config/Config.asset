@@ -42,4 +42,6 @@ MonoBehaviour:
     - sysCollision
     - sysDraw
     - sysColor
-    values: 0101010101
+    - sysRewind
+    - sysLeftSide
+    values: 01010101010101
