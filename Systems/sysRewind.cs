@@ -13,20 +13,11 @@ public class sysRewind : ISystem
     {
         float rewindTimeStamp = ((Rewind) World.world["Rewind"]).rewindTimeStamp;
         float coolDownTimeLeft = (rewindTimeStamp - Time.time);
-        //Used to print on console
-        uint cooldownTimer = ((Rewind)World.world["Rewind"]).cooldownShowNextSecond;
         
         if(coolDownTimeLeft <= 0.0f)
         {
             uint firstCopyId = ((Rewind) World.world["Rewind"]).firstCopyId;
             ((Rewind) World.world["Rewind"]).moveRewindCopies = true;
-            
-            //Print when rewind is available
-            if(cooldownTimer == 0 && rewindTimeStamp > 3.0f)
-            {
-                Debug.Log("Rewind Ready!");
-                ((Rewind)World.world["Rewind"]).cooldownShowNextSecond = 3;
-            }
 
             //If player press space bar
             if (Input.GetKeyDown("space"))
@@ -56,14 +47,9 @@ public class sysRewind : ISystem
         }
         else
         {
-            //Print rewind cooldown
-            if (coolDownTimeLeft <= cooldownTimer && rewindTimeStamp > 3.0f)
+            if (Input.GetKeyDown("space"))
             {
-                if (cooldownTimer > 0)
-                {
-                    Debug.Log("Rewind cooldown: " + cooldownTimer);
-                    ((Rewind)World.world["Rewind"]).cooldownShowNextSecond--;
-                }
+                Debug.Log("Rewind cooldown: " + coolDownTimeLeft + " seconds left");
             }
         }
     }

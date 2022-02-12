@@ -34,7 +34,7 @@ public class sysLeftSide : ISystem
         {
             ((LeftSide) World.world["LeftSide"]).deltaTimeRight = 0;
         }
-        ((LeftSide) World.world["LeftSide"]).frame +=1;
+        ((LeftSide) World.world["LeftSide"]).frame = unchecked(((LeftSide) World.world["LeftSide"]).frame + 1);//let frame come back to 0 on overflow 
         ((LeftSide) World.world["LeftSide"]).deltaTimeRight += Time.deltaTime;
     }
 }
