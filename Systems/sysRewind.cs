@@ -22,7 +22,7 @@ public class sysRewind : ISystem
             ((Rewind) World.world["Rewind"]).moveRewindCopies = true;
             
             //Print when rewind is available
-            if(cooldownTimer == 0)
+            if(cooldownTimer == 0 && rewindTimeStamp > 3.0f)
             {
                 Debug.Log("Rewind Ready!");
                 ((Rewind)World.world["Rewind"]).cooldownShowNextSecond = 3;
@@ -57,7 +57,7 @@ public class sysRewind : ISystem
         else
         {
             //Print rewind cooldown
-            if (coolDownTimeLeft <= cooldownTimer)
+            if (coolDownTimeLeft <= cooldownTimer && rewindTimeStamp > 3.0f)
             {
                 if (cooldownTimer > 0)
                 {
