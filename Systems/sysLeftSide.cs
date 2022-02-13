@@ -15,7 +15,7 @@ public class sysLeftSide : ISystem
         foreach (EntityComponent e in entities)
         {
             int idxPos = (((Position)World.world["Position"]).entities).IndexOf(e);
-            if ((((Position)World.world["Position"]).position)[idxPos][0] <= 0)
+            if ((((Position)World.world["Position"]).position)[idxPos][0] >= 0)
             {
                 if (!((((LeftSide) World.world["LeftSide"]).entities).Contains(e)))
                 {
@@ -34,7 +34,7 @@ public class sysLeftSide : ISystem
         {
             ((LeftSide) World.world["LeftSide"]).deltaTimeRight = 0;
         }
-        ((LeftSide) World.world["LeftSide"]).frame = unchecked(((LeftSide) World.world["LeftSide"]).frame + 1);//let frame come back to 0 on overflow 
+        ((LeftSide) World.world["LeftSide"]).frame = Time.frameCount;
         ((LeftSide) World.world["LeftSide"]).deltaTimeRight += Time.deltaTime;
     }
 }

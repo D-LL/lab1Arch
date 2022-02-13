@@ -5,7 +5,7 @@ using UnityEngine;
 public class LeftSide : IComponent
 {
     public List<EntityComponent> entities = new List<EntityComponent>();
-    public uint frame;
+    public int frame;
     public float deltaTimeRight;
 }
 

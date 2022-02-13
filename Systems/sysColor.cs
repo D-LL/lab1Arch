@@ -11,7 +11,7 @@ public class sysColor : ISystem
     }
     public void UpdateSystem()
     {
-        //find entities with position and speed
+        //find entities with position and color
         List<EntityComponent>[] req = { (((Position)World.world["Position"]).entities), (((ColorComp)World.world["ColorComp"]).entities) };
         List<EntityComponent> entities = World.getIntersect(req);
         if (((LeftSide) World.world["LeftSide"]).frame % 4 != 0)
