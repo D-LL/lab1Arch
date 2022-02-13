@@ -15,7 +15,6 @@ public class RegisterSystems
         toRegister.Add(new sysColor());
         toRegister.Add(new sysDraw());
         toRegister.Add(new sysRewind());
-        toRegister.Add(new sysLeftSide());
         return toRegister;
     }
 }

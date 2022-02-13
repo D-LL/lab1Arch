@@ -15,7 +15,7 @@ public class sysLeftSide : ISystem
         foreach (EntityComponent e in entities)
         {
             int idxPos = (((Position)World.world["Position"]).entities).IndexOf(e);
-            if ((((Position)World.world["Position"]).position)[idxPos][0] >= 0)
+            if ((((Position)World.world["Position"]).position)[idxPos][0] < 0)
             {
                 if (!((((LeftSide) World.world["LeftSide"]).entities).Contains(e)))
                 {
